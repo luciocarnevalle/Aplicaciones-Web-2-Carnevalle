@@ -1,0 +1,25 @@
+{
+  "name": "aplicaciones-web-2-carnevalle",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/luciocarnevalle/Aplicaciones-Web-2-Carnevalle#readme",
+  "bugs": {
+    "url": "https://github.com/luciocarnevalle/Aplicaciones-Web-2-Carnevalle/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luciocarnevalle/Aplicaciones-Web-2-Carnevalle.git"
+  },
+  "license": "ISC",
+  "author": "Lucio Carnevalle",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

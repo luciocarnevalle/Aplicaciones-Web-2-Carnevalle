@@ -1,0 +1,72 @@
+[
+  {
+    "id": "vta-1001",
+    "id_usuario": "usr-001",
+    "fecha": "24/10/2025",
+    "total": 350000,
+    "dirección": "Av. Libertador 1234, CABA",
+    "entregado": true,
+    "productos": [
+      {
+        "id_producto": "babo-01",
+        "cantidad": 1,
+        "precio_unitario": 220000
+      },
+      {
+        "id_producto": "asics-02",
+        "cantidad": 1,
+        "precio_unitario": 130000
+      }
+    ]
+  },
+  {
+    "id": "vta-1002",
+    "id_usuario": "usr-002",
+    "fecha": "14/11/2025",
+    "total": 240000,
+    "dirección": "Av Colon, Córdoba",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": "head-02",
+        "cantidad": 1,
+        "precio_unitario": 240000
+      }
+    ]
+  },
+  {
+    "id": "vta-1003",
+    "id_usuario": "usr-005",
+    "fecha": "03/12/2025",
+    "total": 160000,
+    "dirección": "Av. Libertador 1234, CABA",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": "kirs-01",
+        "cantidad": 2,
+        "precio_unitario": 80000
+      }
+    ]
+  },
+  {
+    "id": "vta-1004",
+    "id_usuario": "usr-005",
+    "fecha": "01/02/2026",
+    "total": 330000,
+    "dirección": "Bulevar Oroño 987, Rosario",
+    "entregado": true,
+    "productos": [
+      {
+        "id_producto": "wils-01",
+        "cantidad": 1,
+        "precio_unitario": 250000
+      },
+      {
+        "id_producto": "tec-03",
+        "cantidad": 1,
+        "precio_unitario": 80000
+      }
+    ]
+  }
+]

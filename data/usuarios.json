@@ -1,0 +1,56 @@
+[
+  {
+    "id": "usr-001",
+    "nombre": "Lucas",
+    "apellido": "Martínez",
+    "email": "lucas.martinez@email.com",
+    "contraseña": "LucasTenis123",
+    "edad": 28,
+    "cuenta_validada": true
+  },
+  {
+    "id": "usr-002",
+    "nombre": "Sofía",
+    "apellido": "Gómez",
+    "email": "sofia.gomez@email.com",
+    "contraseña": "SofiGomez89",
+    "edad": 34,
+    "cuenta_validada": true
+  },
+  {
+    "id": "usr-003",
+    "nombre": "Mateo",
+    "apellido": "Fernández",
+    "email": "mateo.fernandez@email.com",
+    "contraseña": "12345678",
+    "edad": 22,
+    "cuenta_validada": false
+  },
+  {
+    "id": "usr-004",
+    "nombre": "Valentina",
+    "apellido": "Rojas",
+    "email": "valentina.rojas@email.com",
+    "contraseña": "ValeRojas!",
+    "edad": 29,
+    "cuenta_validada": true
+  },
+  {
+    "id": "usr-005",
+    "nombre": "Diego",
+    "apellido": "Herrera",
+    "email": "diego.herrera@email.com",
+    "contraseña": "RogerFedererGOAT",
+    "edad": 41,
+    "cuenta_validada": true
+  },
+  {
+    "id": "usr-006",
+    "nombre": "Camila",
+    "apellido": "Silva",
+    "email": "camila.silva@email.com",
+    "contraseña": "camilita_2004",
+    "edad": 19,
+    "cuenta_validada": false
+  }
+]
