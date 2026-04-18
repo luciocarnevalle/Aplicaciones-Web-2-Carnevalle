@@ -1,14 +1,5 @@
 [
   {
-    "id": "usr-001",
-    "nombre": "Lucas",
-    "apellido": "Martínez",
-    "email": "lucas.martinez@email.com",
-    "contraseña": "LucasTenis123",
-    "edad": 28,
-    "cuenta_validada": true
-  },
-  {
     "id": "usr-002",
     "nombre": "Sofía",
     "apellido": "Gómez",
@@ -51,6 +42,15 @@
     "email": "camila.silva@email.com",
     "contraseña": "camilita_2004",
     "edad": 19,
+    "cuenta_validada": false
+  },
+  {
+    "id": "usr-007",
+    "nombre": "Rafael",
+    "apellido": "Nadal",
+    "email": "rafa.nadal@tenis.com",
+    "contraseña": "VamosRafa2024",
+    "edad": 37,
     "cuenta_validada": false
   }
 ]
