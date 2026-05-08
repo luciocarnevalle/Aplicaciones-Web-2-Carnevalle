@@ -1,45 +1,6 @@
-/* 
-
-//codigo con GET
-app.get(`/ColorDe/:objeto`, (req,res)=>{ //objeto es parametro en este caso. 
-    //ColorDe es la ruta
-    const obj = req.params.objeto //req.params es un objeto que 
-    // contiene los parametros que se le pasan a la ruta. En este caso, el parametro 
-    // es objeto, y lo guardo en la variable obj.
-
-    const resultado = cosas.find(e => e.name === obj) //busco en el array cosas el objeto
-    //  que tenga el mismo nombre que el parametro que me pasaron.
-
-    if (resultado)
-    {
-        res.status(200).json(resultado) //si encuentro el objeto, le envio una respuesta con status 200 y el objeto en formato JSON.
-    }else{
-        res.status(400).json({message: ` ${obj} Objeto no encontrado`})//si no encuentro el objeto, le envio una respuesta con status 400 (Bad Request)
-    }
-
-
-    //Codigo con POST
-    app.post(`/ColorDePost`, (req, res) => {
-     
-        const obj = req.body.objeto
-        const resultado = cosas.find(e => e.name === obj) //busco en el array cosas el objeto que tenga el mismo nombre que el parametro que me pasaron.
-
-    if (resultado)
-    {
-        res.status(200).json(resultado) //si encuentro el objeto, le envio una respuesta con status 200 y el objeto en formato JSON.
-    }else{
-        res.status(400).json({message: ` ${obj} Objeto no encontrado`})//si no encuentro el objeto, le envio una respuesta con status 400 (Bad Request)
-    }
-
-    })
-}) 
-
-*/
-
 import express from 'express';
 import dotenv from 'dotenv';
 import fs, { readFile, writeFile } from 'fs/promises';
-import e from 'express';
 
 //configuro dotenv
 dotenv.config();
@@ -62,34 +23,45 @@ app.get('/', (req, res) => {
     res.send('Servidor de E-commerce funcionando correctamente');
 });
 
-// Ruta para obtener todos los productos
-const file = await readFile('./data/productos.json', 'utf-8');
-const productosData = JSON.parse(file);
 
-//GET
+// Ruta para obtener todos los productos
+const leerProductos = async () => {
+    try {
+        const file = await readFile('./data/productos.json', 'utf-8');
+        return JSON.parse(file);
+    } catch (error) {
+        console.error("Error leyendo el archivo JSON:", error.message);
+        return []; 
+    }
+}
+
+//GET productos
 app.get(`/productos`, async (req,res) => {
     try{
-        res.status(200).json(productosData)
+        const productos = await leerProductos()
+        res.status(200).json(productos)
     }catch{
         res.status(500).json({message: 'Error al obtener los productos'})
     }
 })
 
 
-//GET por ID
-app.get(`/productos/:id`, async (req,res) =>{
-    const productoId = req.params.id
-    const productoEncontrado = productosData.find(p => p.id === productoId)
+// GET productos por ID 
+app.get('/productos/:id', async (req, res) => {
+    try {
+        const productoId = req.params.id;
+        const productosData = await leerProductos(); 
+        const productoEncontrado = productosData.find(p => p.id === (productoId));
 
-    if (productoEncontrado)
-    {
-        res.status(200).json(productoEncontrado) 
-    }else{
-        res.status(404).json({message: `Producto no encontrado`})
+        if (productoEncontrado) {
+            res.status(200).json(productoEncontrado);
+        } else {
+            res.status(404).json({ message: 'Producto no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
-})
-
-
+});
 
 
 //POST
@@ -134,6 +106,13 @@ app.post(`/usuarios/login`, async (req,res) => {
         //Extraigo los datos del cuerpo de la solicitud
         const { email, contraseña } = req.body
 
+        //Verifico que no lleguen vacíos, nulos o solo espacios
+        if (!email || !contraseña || email.trim() === "" || contraseña.trim() === "") {
+            return res.status(400).json({ 
+                message: 'Faltan datos obligatorios: email y contraseña son requeridos.' 
+            });
+        }
+
         //Leo el archivo de usuarios para obtener los datos actuales
         const data = await readFile('./data/usuarios.json', 'utf-8');
         const usuariosData = JSON.parse(data);
@@ -152,11 +131,11 @@ app.post(`/usuarios/login`, async (req,res) => {
                 }
             }) 
         }else{
-            res.status(401).json({message: `email o contraseña inválida`})
+            return res.status(401).json({message: `email o contraseña inválida`})
         }
     }    catch (error) {
         console.error(error); 
-        res.status(500).json({ message: 'Error al iniciar sesión' });
+        return res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 })  
 
@@ -181,7 +160,7 @@ app.put(`/productos/:id`,async (req,res) => {
             productosData[index].precio = NuevoPrecio
             
             //el stringify sirve para convertir el objeto productosData a formato JSON
-           await writeFile('./data/productos.json', JSON.stringify(productosData, null, 2));
+            await writeFile('./data/productos.json', JSON.stringify(productosData, null, 2));
             res.status(200).json({message: `Precio actualizado correctamente`})
         }else{
             res.status(400).json({message: `No se encontro el ID del producto`})
@@ -234,5 +213,4 @@ app.delete(`/usuarios/:id`, async (req,res) => {
         res.status(500).json({message: `Error al eliminar el usuario`})
     }
 })
-
-
+    

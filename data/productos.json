@@ -195,7 +195,7 @@
     "titulo": "Luxilon ALU Power",
     "img": "../images/LuxilonAluPower.webp",
     "descripcion": "Esta cuerda ofrece una potencia y control increible, utilizada y recomendada por muchos jugadores profesionales en todo el mundo.",
-    "precio": 135000
+    "precio": "135000"
   },
   {
     "id": "lux-02",

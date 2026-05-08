@@ -34,23 +34,5 @@
     "contraseña": "RogerFedererGOAT",
     "edad": 41,
     "cuenta_validada": true
-  },
-  {
-    "id": "usr-006",
-    "nombre": "Camila",
-    "apellido": "Silva",
-    "email": "camila.silva@email.com",
-    "contraseña": "camilita_2004",
-    "edad": 19,
-    "cuenta_validada": false
-  },
-  {
-    "id": "usr-007",
-    "nombre": "Rafael",
-    "apellido": "Nadal",
-    "email": "rafa.nadal@tenis.com",
-    "contraseña": "VamosRafa2024",
-    "edad": 37,
-    "cuenta_validada": false
   }
 ]
