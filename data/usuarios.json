@@ -1,38 +1,47 @@
 [
   {
+    "id": "usr-001",
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "email": "juan.perez@example.com",
+    "contraseña": "password123",
+    "edad": 28,
+    "cuenta_validada": false
+  },
+  {
     "id": "usr-002",
-    "nombre": "Sofía",
-    "apellido": "Gómez",
-    "email": "sofia.gomez@email.com",
-    "contraseña": "SofiGomez89",
+    "nombre": "María",
+    "apellido": "García",
+    "email": "maria.garcia@example.com",
+    "contraseña": "securePass456",
     "edad": 34,
     "cuenta_validada": true
   },
   {
     "id": "usr-003",
-    "nombre": "Mateo",
-    "apellido": "Fernández",
-    "email": "mateo.fernandez@email.com",
-    "contraseña": "12345678",
+    "nombre": "Carlos",
+    "apellido": "López",
+    "email": "carlos.lopez@example.com",
+    "contraseña": "admin789",
     "edad": 22,
     "cuenta_validada": false
   },
   {
     "id": "usr-004",
-    "nombre": "Valentina",
-    "apellido": "Rojas",
-    "email": "valentina.rojas@email.com",
-    "contraseña": "ValeRojas!",
-    "edad": 29,
+    "nombre": "Ana",
+    "apellido": "Martínez",
+    "email": "ana.mtz@example.com",
+    "contraseña": "mypassword2024",
+    "edad": 41,
     "cuenta_validada": true
   },
   {
     "id": "usr-005",
-    "nombre": "Diego",
-    "apellido": "Herrera",
-    "email": "diego.herrera@email.com",
-    "contraseña": "RogerFedererGOAT",
-    "edad": 41,
-    "cuenta_validada": true
+    "nombre": "Lucas",
+    "apellido": "Rodríguez",
+    "email": "lucas.rod@example.com",
+    "contraseña": "lucas1234",
+    "edad": 19,
+    "cuenta_validada": false
   }
 ]

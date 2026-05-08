@@ -27,11 +27,12 @@ app.get('/', (req, res) => {
 // Ruta para obtener todos los productos
 const leerProductos = async () => {
     try {
-        const file = await readFile('./data/productos.json', 'utf-8');
+        
+        const file = await readFile('data/productos.json', 'utf-8'); 
         return JSON.parse(file);
     } catch (error) {
-        console.error("Error leyendo el archivo JSON:", error.message);
-        return []; 
+        console.log("Estoy buscando acá:", process.cwd());
+        throw error;
     }
 }
 
@@ -70,13 +71,22 @@ app.post(`/usuarios`, async (req,res) => {
         //Extraigo los datos del cuerpo de la solicitud
         const { nombre, apellido, email, contraseña, edad } = req.body
 
+        if (!nombre || !apellido || !email || !contraseña || !edad) {
+            return res.status(400).json({ message: 'Error: Todos los campos son obligatorios' });
+        }
+
         //Leo el archivo de usuarios para obtener los datos actuales
         const data = await readFile('./data/usuarios.json', 'utf-8');
         const usuariosData = JSON.parse(data);
 
+
+        const ultimoUsuario = usuariosData[usuariosData.length - 1];
+        const ultimoNumero = ultimoUsuario ? parseInt(ultimoUsuario.id.split('-')[1]) : 0;
+        const nuevoNumero = ultimoNumero + 1;
+
         //Creo un nuevo usuario con un ID único
         const nuevoUsuario = { 
-            id: `usr-00${usuariosData.length + 1}`, 
+            id: `usr-00${nuevoNumero}`, 
             nombre, 
             apellido, 
             email, 
@@ -172,45 +182,34 @@ app.put(`/productos/:id`,async (req,res) => {
 
 
 //DELETE
-app.delete(`/usuarios/:id`, async (req,res) => {
-    const usuarioId = req.params.id
+app.delete(`/usuarios/:id`, async (req, res) => {
+    const usuarioId = req.params.id;
 
-    try{
-        //leo los dos jsons
+    try {
         const dataUsuarios = await readFile('./data/usuarios.json', 'utf-8');
         const dataVentas = await readFile('./data/ventas.json', 'utf-8');
 
-        //parseo los datos de los jsons a objetos de JavaScript
         const usuarios = JSON.parse(dataUsuarios);
         const ventas = JSON.parse(dataVentas);
 
-        //verifico si el usuario tiene ventas asociadas 
-        const tieneVentas = ventas.some(v => v.id_usuario === usuarioId)
+        const tieneVentas = ventas.some(v => v.id_usuario === usuarioId);
 
-        if(tieneVentas)
-        {
-                //Si tiene ventas no lo dejo borrar
-                res.status(403).json({ 
-                message: "No se puede eliminar el usuario porque tiene ventas asociadas. Primero debe gestionar el historial de ventas." 
+        if (tieneVentas) {
+            return res.status(403).json({ 
+                message: "No se puede eliminar el usuario porque tiene ventas asociadas." 
             });
         }
 
-        //Uso filter en vez de splice porque filter me devuelve un nuevo array 
-        // sin el usuario que quiero eliminar, mientras que splice modifica 
-        // el array original y puede ser mas complicado de manejar en este caso.
-        const usuarioEncontrado = usuarios.filter(u => u.id !== usuarioId)
+        const usuariosRestantes = usuarios.filter(u => u.id !== usuarioId);
 
-        //Si el usuario encontrado es menor al array original, 
-        // significa que se elimino correctamente
-        if(usuarioEncontrado.length < usuarios.length){
-            await writeFile('./data/usuarios.json', JSON.stringify(usuarioEncontrado, null, 2));
-            res.status(200).json({message: `Usuario eliminado correctamente`})
+        if (usuariosRestantes.length < usuarios.length) {
+            await writeFile('./data/usuarios.json', JSON.stringify(usuariosRestantes, null, 2));
+            return res.status(200).json({ message: "Usuario eliminado correctamente" });
+        } else {
+            return res.status(404).json({ message: "Usuario no encontrado" });
         }
-        else{
-            res.status(404).json({message: `Usuario no encontrado`})
-        }
-    }catch(error){
-        res.status(500).json({message: `Error al eliminar el usuario`})
+
+    } catch (error) {
+        return res.status(500).json({ message: "Error al eliminar el usuario" });
     }
-})
-    
+});
