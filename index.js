@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import fs, { readFile, writeFile } from 'fs/promises';
+import productosRouter from './routes/productos.js';
+import usuariosRouter from './routes/usuarios.js';
 
 //configuro dotenv
 dotenv.config();
@@ -13,6 +15,8 @@ const port = process.env.PORT || 3000;
 //Middleware para que el servidor entienda JSON
 app.use(express.json()); 
 
+app.use('/productos', productosRouter);
+app.use('/usuarios', usuariosRouter);
 // Levanto el servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
@@ -24,192 +28,4 @@ app.get('/', (req, res) => {
 });
 
 
-// Ruta para obtener todos los productos
-const leerProductos = async () => {
-    try {
-        
-        const file = await readFile('data/productos.json', 'utf-8'); 
-        return JSON.parse(file);
-    } catch (error) {
-        console.log("Estoy buscando acá:", process.cwd());
-        throw error;
-    }
-}
 
-//GET productos
-app.get(`/productos`, async (req,res) => {
-    try{
-        const productos = await leerProductos()
-        res.status(200).json(productos)
-    }catch{
-        res.status(500).json({message: 'Error al obtener los productos'})
-    }
-})
-
-
-// GET productos por ID 
-app.get('/productos/:id', async (req, res) => {
-    try {
-        const productoId = req.params.id;
-        const productosData = await leerProductos(); 
-        const productoEncontrado = productosData.find(p => p.id === (productoId));
-
-        if (productoEncontrado) {
-            res.status(200).json(productoEncontrado);
-        } else {
-            res.status(404).json({ message: 'Producto no encontrado' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-});
-
-
-//POST
-app.post(`/usuarios`, async (req,res) => {
-    try{
-        //Extraigo los datos del cuerpo de la solicitud
-        const { nombre, apellido, email, contraseña, edad } = req.body
-
-        if (!nombre || !apellido || !email || !contraseña || !edad) {
-            return res.status(400).json({ message: 'Error: Todos los campos son obligatorios' });
-        }
-
-        //Leo el archivo de usuarios para obtener los datos actuales
-        const data = await readFile('./data/usuarios.json', 'utf-8');
-        const usuariosData = JSON.parse(data);
-
-
-        const ultimoUsuario = usuariosData[usuariosData.length - 1];
-        const ultimoNumero = ultimoUsuario ? parseInt(ultimoUsuario.id.split('-')[1]) : 0;
-        const nuevoNumero = ultimoNumero + 1;
-
-        //Creo un nuevo usuario con un ID único
-        const nuevoUsuario = { 
-            id: `usr-00${nuevoNumero}`, 
-            nombre, 
-            apellido, 
-            email, 
-            contraseña, 
-            edad,
-            cuenta_validada: false 
-        };
-
-        //Agrego el nuevo usuario al array de usuarios y escribo el archivo actualizado
-        usuariosData.push(nuevoUsuario);
-        await writeFile('./data/usuarios.json', JSON.stringify(usuariosData, null, 2));
-
-        res.status(201).json({
-            message: 'Usuario creado correctamente',
-            usuario: nuevoUsuario
-        })
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al crear el usuario' });
-    }
-})
-
-
-//POST2
-app.post(`/usuarios/login`, async (req,res) => {
-    try{    
-        //Extraigo los datos del cuerpo de la solicitud
-        const { email, contraseña } = req.body
-
-        //Verifico que no lleguen vacíos, nulos o solo espacios
-        if (!email || !contraseña || email.trim() === "" || contraseña.trim() === "") {
-            return res.status(400).json({ 
-                message: 'Faltan datos obligatorios: email y contraseña son requeridos.' 
-            });
-        }
-
-        //Leo el archivo de usuarios para obtener los datos actuales
-        const data = await readFile('./data/usuarios.json', 'utf-8');
-        const usuariosData = JSON.parse(data);
-
-        //Busco un usuario que coincida con el email y la contraseña proporcionados
-        const usuarioEncontrado = usuariosData.find(e => e.email === email && e.contraseña === contraseña)
-
-        if (usuarioEncontrado)
-        {
-            res.status(200).json({
-                message: 'Inicio de sesión exitoso',
-                usuario: {
-                    nombre: usuarioEncontrado.nombre,
-                    apellido: usuarioEncontrado.apellido,
-                    email: usuarioEncontrado.email
-                }
-            }) 
-        }else{
-            return res.status(401).json({message: `email o contraseña inválida`})
-        }
-    }    catch (error) {
-        console.error(error); 
-        return res.status(500).json({ message: 'Error al iniciar sesión' });
-    }
-})  
-
-
-
-//PUT
-app.put(`/productos/:id`,async (req,res) => {
-    //Extraigo el ID del producto de los parámetros de la ruta 
-    // y el nuevo precio del cuerpo de la solicitud
-    const productoId = req.params.id
-    const NuevoPrecio = req.body.precio
-
-    try {
-        const data = await readFile('./data/productos.json', 'utf-8');
-        const productosData = JSON.parse(data);
-
-        //Busco el índice del producto en el array de productos 
-        const index = productosData.findIndex(p => p.id === productoId)
-
-        if(index !== -1){
-            //Si encuentro el producto, actualizo su precio en el array productosData
-            productosData[index].precio = NuevoPrecio
-            
-            //el stringify sirve para convertir el objeto productosData a formato JSON
-            await writeFile('./data/productos.json', JSON.stringify(productosData, null, 2));
-            res.status(200).json({message: `Precio actualizado correctamente`})
-        }else{
-            res.status(400).json({message: `No se encontro el ID del producto`})
-        }
-        } catch (error) {
-        res.status(500).json({message: `Error al actualizar el precio`, error})
-    }
-})
-
-
-//DELETE
-app.delete(`/usuarios/:id`, async (req, res) => {
-    const usuarioId = req.params.id;
-
-    try {
-        const dataUsuarios = await readFile('./data/usuarios.json', 'utf-8');
-        const dataVentas = await readFile('./data/ventas.json', 'utf-8');
-
-        const usuarios = JSON.parse(dataUsuarios);
-        const ventas = JSON.parse(dataVentas);
-
-        const tieneVentas = ventas.some(v => v.id_usuario === usuarioId);
-
-        if (tieneVentas) {
-            return res.status(403).json({ 
-                message: "No se puede eliminar el usuario porque tiene ventas asociadas." 
-            });
-        }
-
-        const usuariosRestantes = usuarios.filter(u => u.id !== usuarioId);
-
-        if (usuariosRestantes.length < usuarios.length) {
-            await writeFile('./data/usuarios.json', JSON.stringify(usuariosRestantes, null, 2));
-            return res.status(200).json({ message: "Usuario eliminado correctamente" });
-        } else {
-            return res.status(404).json({ message: "Usuario no encontrado" });
-        }
-
-    } catch (error) {
-        return res.status(500).json({ message: "Error al eliminar el usuario" });
-    }
-});
