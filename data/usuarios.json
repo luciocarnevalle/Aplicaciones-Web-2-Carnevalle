@@ -7,41 +7,5 @@
     "contraseña": "password123",
     "edad": 28,
     "cuenta_validada": false
-  },
-  {
-    "id": "usr-002",
-    "nombre": "María",
-    "apellido": "García",
-    "email": "maria.garcia@example.com",
-    "contraseña": "securePass456",
-    "edad": 34,
-    "cuenta_validada": true
-  },
-  {
-    "id": "usr-003",
-    "nombre": "Carlos",
-    "apellido": "López",
-    "email": "carlos.lopez@example.com",
-    "contraseña": "admin789",
-    "edad": 22,
-    "cuenta_validada": false
-  },
-  {
-    "id": "usr-004",
-    "nombre": "Ana",
-    "apellido": "Martínez",
-    "email": "ana.mtz@example.com",
-    "contraseña": "mypassword2024",
-    "edad": 41,
-    "cuenta_validada": true
-  },
-  {
-    "id": "usr-005",
-    "nombre": "Lucas",
-    "apellido": "Rodríguez",
-    "email": "lucas.rod@example.com",
-    "contraseña": "lucas1234",
-    "edad": 19,
-    "cuenta_validada": false
   }
 ]

@@ -89,24 +89,30 @@ router.post(`/login`, async (req,res) => {
 
 
 //DELETE
-app.delete(`/usuarios/:id`, async (req, res) => {
+router.delete(`/usuarios/:id`, async (req, res) => {
     const usuarioId = req.params.id;
 
     try {
+        //Leo los archivos de usuarios y ventas 
         const dataUsuarios = await readFile('./data/usuarios.json', 'utf-8');
         const dataVentas = await readFile('./data/ventas.json', 'utf-8');
 
+        //Parseo los datos de usuarios y ventas
         const usuarios = JSON.parse(dataUsuarios);
         const ventas = JSON.parse(dataVentas);
 
+        //Verifico si el usuario tiene ventas asociadas antes de eliminarlo
         const tieneVentas = ventas.some(v => v.id_usuario === usuarioId);
 
-        if (tieneVentas) {
+        if (!tieneVentas) {
             return res.status(403).json({ 
                 message: "No se puede eliminar el usuario porque tiene ventas asociadas." 
             });
         }
 
+        console.log(typeof usuarioId, typeof usuarios[0].id);
+        
+        
         const usuariosRestantes = usuarios.filter(u => u.id !== usuarioId);
 
         if (usuariosRestantes.length < usuarios.length) {

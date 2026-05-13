@@ -1,0 +1,39 @@
+/* public/style.css */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.header-seccion {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 40px 0;
+    margin-bottom: 40px;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.card {
+    transition: transform 0.2s;
+    border: none;
+    border-radius: 15px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.badge-marca {
+    background-color: #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.precio-tag {
+    font-size: 1.25rem;
+    color: #0f172a;
+    font-weight: 700;
+}
