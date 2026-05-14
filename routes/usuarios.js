@@ -73,9 +73,11 @@ router.post(`/login`, async (req,res) => {
             res.status(200).json({
                 message: 'Inicio de sesión exitoso',
                 usuario: {
+                    id: usuarioEncontrado.id,
                     nombre: usuarioEncontrado.nombre,
                     apellido: usuarioEncontrado.apellido,
-                    email: usuarioEncontrado.email
+                    email: usuarioEncontrado.email,
+                    direccion: usuarioEncontrado.direccion || "Av Colon, Córdoba"
                 }
             }) 
         }else{

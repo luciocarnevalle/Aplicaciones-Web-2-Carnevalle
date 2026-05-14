@@ -5,6 +5,11 @@ Apellido: Carnevalle
 
 http://localhost:5000/
 
+//EJEMPLO DE USUARIO PARA HACER EL LOGIN
+juan.perez@example.com
+password123
+
+
 GET1: Ver todos los productos
 http://localhost:5000/productos
 

@@ -6,6 +6,7 @@ let todosLosProductos = [];
             mostrarProductos(todosLosProductos);
         }
 
+        // Función para mostrar los productos en el HTML
         function mostrarProductos(lista) {
             const contenedor = document.getElementById('lista');
             contenedor.innerHTML = '';
@@ -30,6 +31,7 @@ let todosLosProductos = [];
             });
         }
 
+        // Función para filtrar productos por categoría
         function filtrar(categoria) {
             if (categoria === 'todos') {
                 mostrarProductos(todosLosProductos);
@@ -43,19 +45,19 @@ let todosLosProductos = [];
 
 
 
-
-function agregarAlCarrito(id) {
-    const producto = todosLosProductos.find(p => p.id === id);
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    
-    // Checkear si ya está
-    const existe = carrito.find(p => p.id === id);
-    if (existe) {
-        existe.cantidad++;
-    } else {
-        carrito.push({ ...producto, cantidad: 1 });
-    }
-    
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    alert('¡Producto añadido!');
-}
+        // Función para agregar un producto al carrito
+        function agregarAlCarrito(id) {
+            const producto = todosLosProductos.find(p => p.id === id);
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            // Checkear si ya está
+            const existe = carrito.find(p => p.id === id);
+            if (existe) {
+                existe.cantidad++;
+            } else {
+                carrito.push({ ...producto, cantidad: 1 });
+            }
+            
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            alert('¡Producto añadido!');
+        }

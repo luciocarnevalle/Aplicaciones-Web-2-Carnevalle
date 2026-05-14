@@ -7,5 +7,16 @@
     "contraseña": "password123",
     "edad": 28,
     "cuenta_validada": false
-  }
+  },
+
+  {
+    "id": "usr-002",
+    "nombre": "Lucio",
+    "apellido": "Gomez",
+    "email": "lucio@test.com",
+    "contraseña": "123",
+    "edad": 22,
+    "direccion": "Av. General Paz 1500, Córdoba",
+    "cuenta_validada": true
+}
 ]

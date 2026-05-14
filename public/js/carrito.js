@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+    // Función para renderizar el carrito
     function renderizarCarrito() {
         contenedor.innerHTML = '';
 
@@ -20,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let totalAcumulado = 0;
 
             carrito.forEach(producto => {
-                // Si el precio viene como string "140.000", lo limpiamos. 
-                // Si ya es un número, lo usamos directo.
+                // Si el precio viene como string "140.000", lo limpio. 
+                // Si ya es un número, lo uso directamente.
                 const precioLimpio = typeof producto.precio === 'string' 
                     ? parseFloat(producto.precio.replace(/\./g, '')) 
                     : producto.precio;
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const subtotal = precioLimpio * producto.cantidad;
                 totalAcumulado += subtotal;
 
+                // Creo la tarjeta del producto en el carrito
                 const divProducto = document.createElement('div');
                 divProducto.className = 'card mb-3 shadow-sm border-0 p-3';
                 divProducto.innerHTML = `
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Vaciar carrito
     btnVaciar.addEventListener('click', () => {
         if (confirm('¿Vaciar todo el carrito?')) {
             carrito = [];
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Eliminar un producto específico
     contenedor.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-eliminar-item')) {
             const id = e.target.dataset.id;
@@ -75,32 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarCarrito();
 
 
-    // GENERAR ORDEN DE COMPRA
+    //Generar orden de compra
     const btnComprar = document.getElementById('btn-comprar');
 
     btnComprar.addEventListener('click', async () => {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    const idLogueado = sessionStorage.getItem('usuarioId') || "usr-001";
+    const direccionLogueada = sessionStorage.getItem('usuarioDireccion') || "Av Colon, Córdoba";
     
     if (carrito.length === 0) {
         alert("El carrito está vacío");
         return;
     }
 
-    // Calculamos el total (limpiando puntos si es necesario como hicimos antes)
-    const total = carrito.reduce((acc, p) => {
-        const precio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/\./g, '')) : p.precio;
+    // Calculo el total sumando cada producto (precio * cantidad)
+    const totalCalculado = carrito.reduce((acc, p) => {
+        const precio = typeof p.precio === 'string' 
+            ? parseFloat(p.precio.replace(/\./g, '')) 
+            : p.precio;
         return acc + (precio * p.cantidad);
     }, 0);
 
-    // Armamos el objeto de la orden
+    // Armo el objeto orden con la estructura que espera el backend
     const orden = {
-        email: "rafa.nadal@tenis.com", // Aquí podrías sacar el mail de quien se logueó
+        id_usuario: idLogueado,
         productos: carrito,
-        total: total,
-        fecha: new Date().toISOString()
+        total: totalCalculado, 
+        direccion: direccionLogueada
     };
 
-    try {
+        try {
         const response = await fetch('/ventas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -110,8 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok) {
             const data = await response.json();
             alert(`¡Gracias por tu compra! Tu orden es la #${data.ordenId}`);
-            
-            // Limpiamos todo
             localStorage.removeItem('carrito');
             window.location.href = 'productos.html';
         } else {
@@ -119,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } catch (error) {
         console.error("Error de red:", error);
-        alert("No se pudo conectar con el servidor para finalizar la compra");
+        alert("No se pudo conectar con el servidor");
     }
     });
 });

@@ -1,7 +1,7 @@
 [
   {
     "id": "vta-1778655789509",
-    "id_usuario": "usr-002",
+    "id_usuario": "usr-001",
     "fecha": "13/5/2026",
     "total": 350000,
     "direccion": "Av Colon, Córdoba",
@@ -16,6 +16,21 @@
         "id_producto": "asics-02",
         "cantidad": 1,
         "precio_unitario": "130000"
+      }
+    ]
+  },
+  {
+    "id": "vta-1778741234549",
+    "id_usuario": "usr-002",
+    "fecha": "14/5/2026",
+    "total": 200000,
+    "direccion": "Av. General Paz 1500, Córdoba",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": "babo-03",
+        "cantidad": 1,
+        "precio_unitario": "200000"
       }
     ]
   }

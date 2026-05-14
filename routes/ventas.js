@@ -8,10 +8,10 @@ router.post('/', async (req, res) => {
     try {
         const { id_usuario, productos, total, direccion } = req.body;
 
-        // Armamos el objeto igual a tu imagen
+        // Creo el objeto de la nueva venta con la estructura esperada por el backend
         const nuevaVenta = {
             id: `vta-${Date.now()}`, // Genera un ID como vta-1715...
-            id_usuario: id_usuario || "usr-002",
+            id_usuario: id_usuario,
             fecha: new Date().toLocaleDateString('es-ES'), // Formato 14/11/2025
             total: total,
             direccion: direccion || "Av Colon, Córdoba",
