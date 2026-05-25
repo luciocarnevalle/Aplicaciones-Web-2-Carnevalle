@@ -33,5 +33,35 @@
         "precio_unitario": "200000"
       }
     ]
+  },
+  {
+    "id": "vta-1779728770992",
+    "id_usuario": "usr-001",
+    "fecha": "25/5/2026",
+    "total": 625000,
+    "direccion": "Av Colon, Córdoba",
+    "entregado": false,
+    "productos": [
+      {
+        "id_producto": "babo-02",
+        "cantidad": 1,
+        "precio_unitario": "180000"
+      },
+      {
+        "id_producto": "babo-03",
+        "cantidad": 1,
+        "precio_unitario": "200000"
+      },
+      {
+        "id_producto": "nike-02",
+        "cantidad": 1,
+        "precio_unitario": "170000"
+      },
+      {
+        "id_producto": "kirs-03",
+        "cantidad": 1,
+        "precio_unitario": "75000"
+      }
+    ]
   }
 ]

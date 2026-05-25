@@ -29,20 +29,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const subtotal = precioLimpio * producto.cantidad;
                 totalAcumulado += subtotal;
-
                 // Creo la tarjeta del producto en el carrito
                 const divProducto = document.createElement('div');
                 divProducto.className = 'card mb-3 shadow-sm border-0 p-3';
                 divProducto.innerHTML = `
                     <div class="row align-items-center text-center text-md-start">
-                        <div class="col-md-7">
+                        <div class="col-md-2 text-center mb-2 mb-md-0">
+                            <img src="${producto.img}" alt="${producto.titulo}" class="img-fluid rounded" style="max-height: 60px; object-fit: contain;">
+                        </div>
+
+                        <div class="col-md-5">
                             <h5 class="fw-bold mb-1">${producto.titulo}</h5>
                             <p class="text-muted small mb-0">Marca: ${producto.marca}</p>
                         </div>
+                        
                         <div class="col-md-3 text-center">
                             <p class="mb-0">Cant: ${producto.cantidad}</p>
                             <p class="fw-bold mb-0">$${precioLimpio.toLocaleString('es-AR')}</p>
                         </div>
+                        
                         <div class="col-md-2 text-md-end text-center mt-2 mt-md-0">
                             <button class="btn btn-sm btn-outline-danger rounded-pill btn-eliminar-item" data-id="${producto.id}">
                                 Eliminar
