@@ -1,8 +1,17 @@
+import { registrarUsuario, loginUsuario, eliminarUsuario } from '../controllers/usuarios.controller.js';
+
 import express from 'express';
 import { readFile, writeFile } from 'fs/promises';
 
 const router = express.Router();
 
+router.post('/',registrarUsuario)
+router.post('/login',loginUsuario)
+router.delete('/:id', eliminarUsuario)
+
+export default router;
+
+/*
 //POST Registro de usuario
 router.post(`/`, async (req,res) => {
     try{
@@ -46,9 +55,10 @@ router.post(`/`, async (req,res) => {
         res.status(500).json({ message: 'Error al crear el usuario' });
     }
 })
+    
 
 
-//POST2
+//POST Login de usuario
 router.post(`/login`, async (req,res) => {
     try{    
         //Extraigo los datos del cuerpo de la solicitud
@@ -88,9 +98,10 @@ router.post(`/login`, async (req,res) => {
         return res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 })  
+    
 
 
-//DELETE
+//DELETE Eliminar un usuario por ID (solo si no tiene ventas asociadas)
 router.delete(`/usuarios/:id`, async (req, res) => {
     const usuarioId = req.params.id;
 
@@ -128,5 +139,6 @@ router.delete(`/usuarios/:id`, async (req, res) => {
         return res.status(500).json({ message: "Error al eliminar el usuario" });
     }
 });
+*/
 
-export default router;
+

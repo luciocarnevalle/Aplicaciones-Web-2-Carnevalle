@@ -102,7 +102,7 @@ function mostrarProductos(lista) {
                                 <button class="cantidad-selector__btn btn btn-sm btn-outline-secondary" data-accion="sumar" aria-label="Sumar uno" style="padding: 2px 8px;">+</button>
                             </div>
                         </div>
-                        <button class="btn btn-dark btn-sm rounded-pill w-100 boton-card" data-id-producto="${p.id}">
+                        <button class="btn btn-dark btn-sm rounded-pill w-100 boton-card" data-id-producto="${p._id}">
                             Añadir al carrito
                         </button>
                     </div>
@@ -154,7 +154,7 @@ document.body.addEventListener("click", (e) => {
         const idProducto = botonCarrito.dataset.idProducto;
         const cantidad = parseInt(inputCantidad.value);
         
-        const productoParaAgregar = todosLosProductos.find(p => p.id === idProducto);
+        const productoParaAgregar = todosLosProductos.find(p => p._id === idProducto);
 
         if (!productoParaAgregar) {
             console.error("No se encontró el producto");
@@ -162,7 +162,7 @@ document.body.addEventListener("click", (e) => {
         }
 
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        const productoEnCarrito = carrito.find(p => p.id === idProducto);
+        const productoEnCarrito = carrito.find(p => p._id === idProducto);
 
         if (productoEnCarrito) {
             // Sumamos la cantidad nueva acumulada a la que ya existía

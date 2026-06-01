@@ -4,7 +4,6 @@
     "id_usuario": "usr-001",
     "fecha": "13/5/2026",
     "total": 350000,
-    "direccion": "Av Colon, Córdoba",
     "entregado": false,
     "productos": [
       {
@@ -24,7 +23,6 @@
     "id_usuario": "usr-002",
     "fecha": "14/5/2026",
     "total": 200000,
-    "direccion": "Av. General Paz 1500, Córdoba",
     "entregado": false,
     "productos": [
       {
@@ -39,7 +37,6 @@
     "id_usuario": "usr-001",
     "fecha": "25/5/2026",
     "total": 625000,
-    "direccion": "Av Colon, Córdoba",
     "entregado": false,
     "productos": [
       {

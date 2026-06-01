@@ -1,7 +1,25 @@
+import {obtenerProductos, obtenerProductoPorId, actualizarPrecioProducto} from '../controllers/productos.controller.js';
+
+
 import express from 'express';
 import { readFile, writeFile } from 'fs/promises';
 
 const router = express.Router();
+
+
+
+// GET productos generales 
+router.get('/', obtenerProductos);
+router.get('/:id', obtenerProductoPorId);
+router.put('/:id', actualizarPrecioProducto);
+
+export default router;
+
+//GET productos
+
+
+
+/*
 
 const leerProductos = async () => {
     try {
@@ -12,16 +30,15 @@ const leerProductos = async () => {
     }
 };
 
-
-//GET productos
-router.get(`/`, async (req,res) => {
+router.get('/', async (req,res) => {
     try{
-        const productos = await leerProductos()
-        res.status(200).json(productos)
+        const resultado = await obtenerProductos();
+        res.status(200).json(resultado)
     }catch{
         res.status(500).json({message: 'Error al obtener los productos'})
     }
 })
+
 
 // GET productos por ID 
 router.get('/:id', async (req, res) => {
@@ -68,6 +85,7 @@ router.put('/:id',async (req,res) => {
         res.status(500).json({message: `Error al actualizar el precio`, error})
     }
 })
+*/
 
-export default router;
+
 

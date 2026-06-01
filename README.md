@@ -26,7 +26,7 @@ http://localhost:5000/usuarios
   "nombre": "Rafael",
   "apellido": "Nadal",
   "email": "rafa.nadal@tenis.com",
-  "contraseña": "VamosRafa2024",
+  "contraseña": "1234",
   "edad": 37
 }
 
@@ -37,16 +37,16 @@ http://localhost:5000/usuarios/login
 //Datos para comprobar que se creo y ver su informacion
 {
   "email": "rafa.nadal@tenis.com",
-  "contraseña": "VamosRafa2024"
+  "contraseña": "1234"
 }
 
 
 PUT: Cambiar el precio de algun producto
 http://localhost:5000/productos/lux-01
 
-//Precio nuevo para probar y cambiarlo (ahora sale 135000)
+//Precio nuevo para probar y cambiarlo (ahora sale 140000)
 {
-  "precio": 140000
+  "precio": 130000
 }
 
 

@@ -1,7 +1,16 @@
+import {crearVenta} from "../controllers/ventas.controller.js";
+
 import express from 'express';
 import fs from 'fs/promises';
+import { verificarToken } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
+
+router.post('/', verificarToken, crearVenta );
+
+export default router;
+
+/*
 const pathVentas = './data/ventas.json';
 
 router.post('/', async (req, res) => {
@@ -35,5 +44,4 @@ router.post('/', async (req, res) => {
         res.status(500).json({ mensaje: "Error al procesar compra" });
     }
 });
-
-export default router;
+*/

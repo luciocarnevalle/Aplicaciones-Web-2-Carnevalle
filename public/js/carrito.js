@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         
                         <div class="col-md-2 text-md-end text-center mt-2 mt-md-0">
-                            <button class="btn btn-sm btn-outline-danger rounded-pill btn-eliminar-item" data-id="${producto.id}">
+                            <button class="btn btn-sm btn-outline-danger rounded-pill btn-eliminar-item" data-id="${producto._id}">
                                 Eliminar
                             </button>
                         </div>
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     contenedor.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-eliminar-item')) {
             const id = e.target.dataset.id;
-            carrito = carrito.filter(p => p.id !== id);
+            carrito = carrito.filter(p => p._id !== id);
             localStorage.setItem('carrito', JSON.stringify(carrito));
             renderizarCarrito();
         }
@@ -90,8 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btnComprar.addEventListener('click', async () => {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    const idLogueado = sessionStorage.getItem('usuarioId') || "usr-001";
-    const direccionLogueada = sessionStorage.getItem('usuarioDireccion') || "Av Colon, Córdoba";
+    //Recupero el token 
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+            alert("Debes iniciar sesión para poder finalizar la compra.");
+            window.location.href = '../index.html'; 
+            return;
+        }
     
     if (carrito.length === 0) {
         alert("El carrito está vacío");
@@ -106,28 +112,41 @@ document.addEventListener('DOMContentLoaded', () => {
         return acc + (precio * p.cantidad);
     }, 0);
 
-    // Armo el objeto orden con la estructura que espera el backend
+    const productosFormateados = carrito.map(p => ({
+        id_producto: p._id, 
+        cantidad: p.cantidad,
+        precio_unitario: typeof p.precio === 'string' ? parseFloat(p.precio.replace(/\./g, '')) : p.precio
+    }));
+
+    // Armo el objeto orden final
     const orden = {
-        id_usuario: idLogueado,
-        productos: carrito,
-        total: totalCalculado, 
-        direccion: direccionLogueada
+        productos: productosFormateados, 
+        total: totalCalculado
     };
 
         try {
         const response = await fetch('/ventas', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(orden)
         });
 
         if (response.ok) {
             const data = await response.json();
-            alert(`¡Gracias por tu compra! Tu orden es la #${data.ordenId}`);
+            
+            //limpio el carrito
             localStorage.removeItem('carrito');
+
+            //Muestro modal de éxito con el ID de orden
+            document.getElementById('modal-orden-id').textContent = `#${data.ordenId}`;
+            
+            const miModal = new bootstrap.Modal(document.getElementById('modalExito'));
+            miModal.show();
+            document.getElementById('btn-modal-entendido').addEventListener('click', () => {
             window.location.href = 'productos.html';
+    });
         } else {
-            alert("Error al procesar la compra en el servidor");
+            alert(`Error: ${data.message || "No se pudo procesar la compra"}`);
         }
     } catch (error) {
         console.error("Error de red:", error);
