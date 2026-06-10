@@ -30,7 +30,12 @@ export const crearVenta = async (req, res) => {
             }))
         });
         await nuevaVenta.save();
-        res.status(201).json({ message: "Venta creada exitosamente", ordenId: nuevaVenta._id }); 
+
+        // Envio la respuesta 
+        return res.status(201).json({ 
+            message: "Venta creada exitosamente", 
+            ordenId: nuevaVenta._id,
+        });
     } catch (error) {
         res.status(500).json({ message: "Error interno del servidor" });
     }

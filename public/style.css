@@ -1,9 +1,10 @@
 /* ESTILOS GENERALES*/
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif !important;
+    background-color:#e0e0e0!important;
     color: #333;
 }
+/*  #e0e0e0  */
 
 .header-seccion {
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
@@ -178,6 +179,21 @@ div[class^="card"] p.small {
     transform: scale(1.1);
     color: white;
 }
+
+
+/* ICONOS FOOTER */
+.social-link img {
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.social-link img:hover {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+}
+
+
+
+
 
 
 

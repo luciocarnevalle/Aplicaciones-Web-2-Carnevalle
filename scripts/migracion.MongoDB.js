@@ -1,3 +1,5 @@
+/*
+
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { readFile } from 'fs/promises';
@@ -83,3 +85,5 @@ const migrarTodo = async () => {
     }
 };
 migrarTodo();
+
+*/
