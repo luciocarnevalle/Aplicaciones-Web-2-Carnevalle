@@ -1,9 +1,14 @@
 Nombre: Lucio
 Apellido: Carnevalle 
 
+Link del repo: https://github.com/luciocarnevalle/Aplicaciones-Web-2-Carnevalle
 # Aplicaciones-Web-2-Carnevalle
 
 http://localhost:5000/
+
+Datos para entrar al ecommerce
+Mail: rafa.nadal@tenis.com
+Contrasena: 1234
 
 
 GET1: Ver todos los productos
